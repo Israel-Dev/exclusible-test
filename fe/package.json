@@ -22,7 +22,6 @@
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
-    "isready": "npm run format && npm run lint && npm run build",
     "prepare": "cd .. && husky install fe/.husky"
   },
   "eslintConfig": {
