@@ -10,8 +10,7 @@
     "build": "tsc",
     "format": "prettier --write '*.{ts,tsx,scss,css,json}'",
     "lint": "eslint --ext .js,.ts, . --color",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "cd .. && husky install be/.husky"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
