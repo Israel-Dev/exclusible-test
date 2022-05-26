@@ -8,9 +8,13 @@ export const controller = {
 
       const newUser = await userService.register(email, password, username);
 
+      if (newUser && !newUser.newUser)
+        return res.status(newUser.status).send({ message: newUser.message });
+
       if (newUser) {
         return res.status(201).send({ message: 'New user created', newUser });
       }
+
       res.status(400).send();
     } catch (e) {
       console.error('Error in userController.register:', e);

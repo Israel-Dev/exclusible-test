@@ -7,11 +7,16 @@ const { JWT_SECRET } = process.env;
 export const service = {
   register: async (email: string, password: string, username: string) => {
     try {
+      const isRegisteredUser = await userModel.find({ email });
+
+      if (isRegisteredUser.length)
+        return { status: 403, message: 'The user is already registered' };
+
       const hashedPassword = bcrypt.hashSync(password, 10);
 
       const newUser = await userModel.create({ email, password: hashedPassword, username });
 
-      return newUser;
+      return { status: 200, message: 'User created successfully', newUser };
     } catch (e) {
       console.error('Error in userService.register:', e);
     }
