@@ -8,7 +8,7 @@
     "watch": "tsc --watch",
     "start:dev": "env-cmd nodemon ./build/index.js",
     "build": "tsc",
-    "format": "prettier --write '*.{ts,tsx,scss,css,json}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
     "lint": "eslint --ext .js,.ts, . --color",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
