@@ -1,8 +1,8 @@
-import mongoose from '../../db/connection';
+import { MongooseClient } from '../../db';
 
 import { Schema } from 'mongoose';
 
-interface User extends mongoose.Document {
+interface User extends MongooseClient.Document {
   username: string;
   email: string;
   password: string;
@@ -17,6 +17,6 @@ const userSchema = new Schema<User>(
   { collection: 'users' }
 );
 
-const model = mongoose.model<User>('User', userSchema);
+const model = MongooseClient.model<User>('User', userSchema);
 
 export default model;

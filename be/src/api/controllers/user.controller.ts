@@ -6,13 +6,16 @@ export const controller = {
     try {
       const { email, password, username } = req.body;
 
-      const newUser = await userService.register(email, password, username);
+      const operationData = await userService.register(email, password, username);
 
-      if (newUser && !newUser.newUser)
-        return res.status(newUser.status).send({ message: newUser.message });
+      if (operationData && !operationData.newUser)
+        return res.status(operationData.status).send({ message: operationData.message });
 
-      if (newUser) {
-        return res.status(201).send({ message: 'New user created', newUser });
+      if (operationData) {
+        return res.status(operationData.status).send({
+          message: operationData.message,
+          token: operationData.token
+        });
       }
 
       res.status(400).send();
@@ -31,6 +34,20 @@ export const controller = {
       res.send({ token, message: "You're logged in" });
     } catch (e) {
       console.error('Error in userController.login', e);
+    }
+  },
+  logout: async (req: Request, res: Response) => {
+    try {
+      const { authorization } = req.headers;
+      const { email } = req.body;
+
+      const operationData = await userService.logout(email, authorization as string);
+
+      if (!operationData) return res.status(400).send({ message: 'Your operation failed' });
+
+      res.status(operationData.status).send({ message: operationData.message });
+    } catch (e) {
+      console.error('Error in userController.logout', e);
     }
   }
 };
