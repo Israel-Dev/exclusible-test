@@ -17,7 +17,12 @@ export const service = {
 
       const hashedPassword = bcrypt.hashSync(password, 10);
 
-      const newUser = await userModel.create({ email, password: hashedPassword, username });
+      const newUser = await userModel.create({
+        email,
+        password: hashedPassword,
+        username,
+        teams: []
+      });
 
       const token = await service.login(email, password);
       return { status: 201, message: 'User created successfully', newUser, token };

@@ -1,4 +1,7 @@
 import { Request, Response } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+const { JWT_SECRET } = process.env;
 
 export const mw = {
   hasAllFields: (req: Request, res: Response, next: () => void) => {
@@ -23,7 +26,16 @@ export const mw = {
 
     req.headers.authorization = authorization.split(' ')[1];
 
-    next();
+    if (JWT_SECRET) {
+      jwt.verify(req.headers.authorization, JWT_SECRET, (err, decoded) => {
+        if (err) {
+          console.error(err);
+          return res.status(401).send({ message: 'Invalid sign in' });
+        }
+        req.headers.userEmail = (decoded as JwtPayload).email;
+        next();
+      });
+    }
   },
   hasEmail: (req: Request, res: Response, next: () => void) => {
     const { email } = req.body;
