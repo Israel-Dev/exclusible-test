@@ -9,7 +9,7 @@ if (CLUSTER_USER && CLUSTER_PASSWORD && CLUSTER && dbName) {
 
   const db = mongoose.connection;
 
-  db.on('error', (error) => console.error('Error on db connection', error));
+  db.on('error', (error) => console.error('**** Error on db connection ****', error));
   db.once('open', () => console.log('**** Connection estabilshed to DB ******'));
 }
 
