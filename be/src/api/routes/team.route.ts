@@ -8,7 +8,13 @@ router.get('/myTeams', userMw.hasAuthorization, teamController.getTeams);
 
 router.get('/allMembers', teamMw.hasTeamRef, userMw.hasAuthorization, teamController.getMembers);
 
-router.post('/addMember', teamMw.hasTeamRef, userMw.hasAuthorization, teamController.addMember);
+router.post(
+  '/addMember',
+  teamMw.hasTeamRef,
+  memberMw.hasMemberId,
+  userMw.hasAuthorization,
+  teamController.addMember
+);
 
 router.delete(
   '/deleteMember',

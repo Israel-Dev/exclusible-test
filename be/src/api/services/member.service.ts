@@ -2,22 +2,22 @@ import { memberModel } from '../models';
 import { Member } from '../models/member.model';
 
 export const service = {
-  // getTeam: async (teamRef: string) => {
-  //   try {
-  //     //   const user = ((await userService.getUser(email)) as Array<User>)[0];
-  //     //   const userId = user.id;
-  //     const team = await teamService.getTeamByRef(teamRef);
-  //     if (!team) return null;
-  //     return team;
-  //     //   console.log('team', team);
-  //     //   console.log('user', user);
-  //     //   const redisKey = `${RedisKeys.Token}${userId}`;
-  //     //   const validTokens = await RedisClient.SMEMBERS(redisKey);
-  //     //   const numberOFawait RedisClient.SREM(token)
-  //   } catch (e) {
-  //     console.error('Error in memberService', e);
-  //   }
-  // }
+  getMemberById: async (memberId: string) => {
+    try {
+      const member = await memberModel.findById(memberId);
+
+      if (!member)
+        return {
+          status: 404,
+          message: `A member with the id '${memberId}' was not found`
+        };
+
+      return member;
+    } catch (e) {
+      console.error('Error in memberService.getMemberById', e);
+      return { status: 404, message: `A member with the id '${memberId}' was not found` };
+    }
+  },
   getMembersOfTeam: async (membersIds: string[]) => {
     try {
       const members = [];

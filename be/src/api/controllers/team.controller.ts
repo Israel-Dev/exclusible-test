@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { teamModel } from '../models';
+import { memberModel, teamModel } from '../models';
+import { Member } from '../models/member.model';
 import { memberService, teamService, userService } from '../services';
 
 export const controller = {
@@ -47,13 +48,25 @@ export const controller = {
   addMember: async (req: Request, res: Response) => {
     try {
       const { teamRef } = req.query;
-      const { body } = req;
+      const { memberId } = req.body;
 
-      const newMember = await memberService.createMember(body);
+      const member = await memberService.getMemberById(memberId);
 
-      if (!newMember) return res.status(409).send({ message: 'Unable to create a new member' });
+      if (member && (member as { status: number }).status)
+        return res
+          .status((member as { status: number }).status)
+          .send({ message: (member as { message: string }).message });
 
-      await teamService.addMemberToTeam(newMember?.id, teamRef as string);
+      const team = await teamService.getTeamByRef(teamRef as string);
+
+      if (!team) return res.status(400).send({ message: `The team ${teamRef} was not found` });
+
+      if (team.members.find((id) => id === memberId))
+        return res.status(409).send({
+          message: `The member with id '${memberId}' is already in the team '${teamRef}'`
+        });
+
+      await teamService.addMemberToTeam(memberId as string, teamRef as string);
 
       res.status(200).send({ message: `Member added to the team: ${teamRef}` });
     } catch (e) {
