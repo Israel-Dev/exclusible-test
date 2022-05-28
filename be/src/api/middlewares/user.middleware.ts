@@ -49,6 +49,8 @@ export const mw = {
 
       if (!userId) return res.status(404).send({ message: 'Your user was not found' });
 
+      req.headers.userId = userId;
+
       const isValidToken = await RedisClient.SISMEMBER(
         `${RedisKeys.Token}${userId}`,
         authorization as string

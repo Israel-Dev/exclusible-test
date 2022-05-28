@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
+import { RedisClient } from '../../db';
 import { userService } from '../services';
+import { RedisKeys } from '../types/redis';
 
 export const controller = {
   register: async (req: Request, res: Response) => {
@@ -47,6 +49,21 @@ export const controller = {
       res.status(operationData.status).send({ message: operationData.message });
     } catch (e) {
       console.error('Error in userController.logout', e);
+    }
+  },
+  logoutAll: async (req: Request, res: Response) => {
+    try {
+      const { authorization, userId } = req.headers;
+
+      const numberOfDeletedTokens = await RedisClient.DEL(`${RedisKeys.Token}${userId}`);
+
+      if (numberOfDeletedTokens) {
+        return res.status(202).send({ message: `You terminated all your sessions` });
+      }
+
+      res.status(409).send({ message: 'Unable to end your sessions' });
+    } catch (e) {
+      console.error('Error in userController.logoutAll', e);
     }
   }
 };

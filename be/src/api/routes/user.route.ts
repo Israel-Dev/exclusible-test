@@ -10,4 +10,6 @@ router.post('/login', userMw.hasCredentials, userController.login);
 
 router.post('/logout', userMw.hasAuthorization, userMw.hasValidToken, userController.logout);
 
+router.get('/logoutAll', userMw.hasAuthorization, userMw.hasValidToken, userController.logoutAll);
+
 export default router;
