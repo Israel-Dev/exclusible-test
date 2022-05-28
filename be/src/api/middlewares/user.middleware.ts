@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { RedisClient } from '../../db';
+import { userService } from '../services';
+import { RedisKeys } from '../types/redis';
 
 const { JWT_SECRET } = process.env;
 
@@ -37,16 +40,31 @@ export const mw = {
       });
     }
   },
+  hasValidToken: async (req: Request, res: Response, next: () => void) => {
+    try {
+      const { authorization } = req.headers;
+      const { userEmail } = req.headers;
+
+      const userId = (await userService.getUser(userEmail as string))?.id;
+
+      if (!userId) return res.status(404).send({ message: 'Your user was not found' });
+
+      const isValidToken = await RedisClient.SISMEMBER(
+        `${RedisKeys.Token}${userId}`,
+        authorization as string
+      );
+
+      if (!isValidToken) return res.status(401).send({ message: 'Your session is invalid' });
+      next();
+    } catch (e) {
+      console.error('Error in userMiddleware', e);
+      res.status(401).send({ message: 'Your token is invalid' });
+    }
+  },
   hasEmail: (req: Request, res: Response, next: () => void) => {
     const { email } = req.body;
 
     if (!email) return res.status(400).send({ message: 'No email was sent in the request' });
     next();
   }
-  // isLoggedIn: (req: Request, res: Response, next: () => void) => {
-  //   const { authorization } = req.headers;
-
-  //   console.log('authorization', authorization);
-  //   next();
-  // }
 };

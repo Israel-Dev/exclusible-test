@@ -8,6 +8,6 @@ router.post('/register', userMw.hasAllFields, userController.register);
 
 router.post('/login', userMw.hasCredentials, userController.login);
 
-router.post('/logout', userMw.hasAuthorization, userMw.hasEmail, userController.logout);
+router.post('/logout', userMw.hasAuthorization, userMw.hasValidToken, userController.logout);
 
 export default router;

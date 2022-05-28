@@ -5,6 +5,11 @@ import { userMw } from '../middlewares';
 
 const router = express.Router();
 
-router.post('/createMember', userMw.hasAuthorization, memberController.createMember);
+router.post(
+  '/createMember',
+  userMw.hasAuthorization,
+  userMw.hasValidToken,
+  memberController.createMember
+);
 
 export default router;

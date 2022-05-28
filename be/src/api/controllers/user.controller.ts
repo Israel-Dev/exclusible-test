@@ -38,10 +38,9 @@ export const controller = {
   },
   logout: async (req: Request, res: Response) => {
     try {
-      const { authorization } = req.headers;
-      const { email } = req.body;
+      const { authorization, userEmail } = req.headers;
 
-      const operationData = await userService.logout(email, authorization as string);
+      const operationData = await userService.logout(userEmail as string, authorization as string);
 
       if (!operationData) return res.status(400).send({ message: 'Your operation failed' });
 
