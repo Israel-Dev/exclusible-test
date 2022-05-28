@@ -1,10 +1,7 @@
 import express from 'express';
 import { UserRoute } from './api/routes';
 import { createServer } from 'http';
-import {
-  createMainWebSocketConnection,
-  createKrakenWebSocketConnection
-} from './websocket/connections';
+import { createMainWebSocketConnection } from './websocket/connections';
 
 const { PORT } = process.env;
 
