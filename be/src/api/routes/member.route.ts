@@ -1,4 +1,3 @@
-import e from 'express';
 import express from 'express';
 import { memberController } from '../controllers';
 import { userMw } from '../middlewares';

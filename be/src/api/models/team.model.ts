@@ -1,4 +1,4 @@
-import { Mongoose, Schema, Types } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 import { MongooseClient } from '../../db';
 
 interface Team extends MongooseClient.Document {

@@ -53,7 +53,7 @@ export const controller = {
   },
   logoutAll: async (req: Request, res: Response) => {
     try {
-      const { authorization, userId } = req.headers;
+      const { userId } = req.headers;
 
       const numberOfDeletedTokens = await RedisClient.DEL(`${RedisKeys.Token}${userId}`);
 

@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { memberModel, teamModel } from '../models';
-import { Member } from '../models/member.model';
 import { memberService, teamService, userService } from '../services';
 
 export const controller = {
