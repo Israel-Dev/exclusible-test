@@ -1,0 +1,47 @@
+import { Request, Response } from 'express';
+import { teamModel } from '../models';
+import { memberService, teamService, userService } from '../services';
+
+export const controller = {
+  getTeams: async (req: Request, res: Response) => {
+    try {
+      const { userEmail } = req.headers;
+      const user = await userService.getUser(userEmail as string);
+
+      if (!user) return res.status(400).send({ message: 'User not found' });
+
+      const teamRefsArr = [];
+
+      for (let i = 0; i < user.teams.length; i++) {
+        const team = user.teams[i];
+
+        const teamRef = (await teamService.getTeamById(team))?.teamRef;
+
+        teamRefsArr.push(teamRef);
+      }
+
+      res.status(200).send(teamRefsArr);
+    } catch (e) {
+      console.error('Error in teamController.getTeam', e);
+    }
+  },
+  getMembers: async (req: Request, res: Response) => {
+    try {
+      const { teamRef } = req.query;
+
+      const team = await teamService.getTeamByRef(teamRef as string);
+
+      if (!team) {
+        return res.status(404).send({ message: 'Team not found' });
+      }
+
+      const members = await memberService.getMembersOfTeam(team.members);
+
+      if (!members) return res.status(404).send({ message: 'No members were found' });
+
+      res.status(200).send(members);
+    } catch (e) {
+      console.error('Error in memberController', e);
+    }
+  }
+};

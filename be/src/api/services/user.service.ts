@@ -8,6 +8,15 @@ const { RedisKeys } = RedisEnums;
 const { JWT_SECRET } = process.env;
 
 export const service = {
+  getUser: async (email: string) => {
+    try {
+      const users = await userModel.find({ email });
+
+      if (users.length === 1) return users[0];
+    } catch (e) {
+      console.error('Error in userService', e);
+    }
+  },
   register: async (email: string, password: string, username: string) => {
     try {
       const isRegisteredUser = await userModel.find({ email });
@@ -32,17 +41,17 @@ export const service = {
   },
   login: async (email: string, password: string) => {
     try {
-      const users = await userModel.find({ email });
+      const user = await service.getUser(email);
 
-      if (users.length !== 1) return null;
+      if (!user) return null;
 
-      const isSame = await bcrypt.compare(password, users[0].password);
+      const isSame = await bcrypt.compare(password, user.password);
 
       if (!isSame) return null;
 
       const token = jwt.sign({ email }, JWT_SECRET as string);
 
-      const userId = users[0].id;
+      const userId = user.id;
       const redisKey = `${RedisKeys.Token}${userId}`;
       await RedisClient.SADD(redisKey, token);
       return token;

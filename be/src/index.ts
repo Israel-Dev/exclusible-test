@@ -1,5 +1,5 @@
 import express from 'express';
-import { MemberRoute, UserRoute } from './api/routes';
+import { TeamRoute, UserRoute } from './api/routes';
 import { createServer } from 'http';
 import { createMainWebSocketConnection } from './websocket/connections';
 
@@ -11,7 +11,7 @@ createMainWebSocketConnection(httpServer);
 
 app.use(express.json());
 app.use('/user', UserRoute);
-app.use('/member', MemberRoute);
+app.use('/team', TeamRoute);
 
 app.get('/', (req, res) => {
   res.send('This is the Backed of the Exclusible tech test');
