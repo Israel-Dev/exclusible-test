@@ -29,7 +29,7 @@ export const mw = {
     if (JWT_SECRET) {
       jwt.verify(req.headers.authorization, JWT_SECRET, (err, decoded) => {
         if (err) {
-          console.error(err);
+          console.error('Error in userMiddleware.hasAuthorization', err);
           return res.status(401).send({ message: 'Invalid sign in' });
         }
         req.headers.userEmail = (decoded as JwtPayload).email;

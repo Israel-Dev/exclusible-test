@@ -36,5 +36,22 @@ export const service = {
     } catch (e) {
       console.error('Error in teamService.addMemberTeam', e);
     }
+  },
+  deleteTeamMember: async (memberId: string, teamRef: string) => {
+    try {
+      const members = (await teamModel.find({ teamRef }))[0].members;
+
+      const indexToBeRemoved = members.findIndex((savedMember) => savedMember === memberId);
+
+      if (indexToBeRemoved === -1) return { status: 404, message: 'Member was not found' };
+
+      members.splice(indexToBeRemoved, 1);
+
+      const updatedMembers = await teamModel.findOneAndUpdate({ teamRef }, { members });
+
+      return updatedMembers;
+    } catch (e) {
+      console.error('Error in teamService.deleteTeamMember', e);
+    }
   }
 };

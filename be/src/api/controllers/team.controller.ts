@@ -59,5 +59,27 @@ export const controller = {
     } catch (e) {
       console.error('Error in teamController.addMember', e);
     }
+  },
+  deleteMember: async (req: Request, res: Response) => {
+    try {
+      const { teamRef } = req.query;
+      const { memberId } = req.body;
+
+      const updatedMembers = await teamService.deleteTeamMember(
+        memberId as string,
+        teamRef as string
+      );
+
+      if (updatedMembers && (updatedMembers as { status: number; message: string }).status) {
+        return res.status((updatedMembers as { status: number; message: string }).status).send({
+          message: (updatedMembers as { status: number; message: string }).message
+        });
+      }
+      if (!updatedMembers) return res.status(406).send({ message: 'Unable to delete member' });
+
+      res.status(202).send({ message: 'Member was deleted' });
+    } catch (e) {
+      console.error('Error in teamController.deleteMember', e);
+    }
   }
 };
