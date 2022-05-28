@@ -1,6 +1,6 @@
 import { MongooseClient } from '../../db';
 
-import { ObjectId, Schema, Types } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 
 interface User extends MongooseClient.Document {
   username: string;
