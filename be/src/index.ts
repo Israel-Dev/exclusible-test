@@ -1,18 +1,24 @@
 import express from 'express';
 import { UserRoute } from './api/routes';
+import { createServer } from 'http';
+import {
+  createMainWebSocketConnection,
+  createKrakenWebSocketConnection
+} from './websocket/connections';
 
 const { PORT } = process.env;
 
 const app = express();
+const httpServer = createServer(app);
+createMainWebSocketConnection(httpServer);
 
 app.use(express.json());
+app.use('/user', UserRoute);
 
 app.get('/', (req, res) => {
   res.send('This is the Backed of the Exclusible tech test');
 });
 
-app.use('/user', UserRoute);
-
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
