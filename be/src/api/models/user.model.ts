@@ -12,7 +12,7 @@ export interface User extends MongooseClient.Document {
 const userSchema = new Schema<User>(
   {
     username: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     teams: [String]
   },

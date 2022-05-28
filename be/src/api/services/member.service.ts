@@ -1,4 +1,5 @@
 import { memberModel } from '../models';
+import { Member } from '../models/member.model';
 
 export const service = {
   // getTeam: async (teamRef: string) => {
@@ -31,6 +32,15 @@ export const service = {
       return members;
     } catch (e) {
       console.error('Error in memberService.getMembersOfTeam', e);
+    }
+  },
+  createMember: async (member: Member) => {
+    try {
+      const newMember = await memberModel.create(member);
+
+      return newMember;
+    } catch (e) {
+      console.error('Error in memberService.createMember', e);
     }
   }
 };

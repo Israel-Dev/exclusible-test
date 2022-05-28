@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { MongooseClient } from '../../db';
 
-interface Member extends MongooseClient.Document {
+export interface Member extends MongooseClient.Document {
   name: string;
   email: string;
   dob: Date;

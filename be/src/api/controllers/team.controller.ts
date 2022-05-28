@@ -43,5 +43,21 @@ export const controller = {
     } catch (e) {
       console.error('Error in memberController', e);
     }
+  },
+  addMember: async (req: Request, res: Response) => {
+    try {
+      const { teamRef } = req.query;
+      const { body } = req;
+
+      const newMember = await memberService.createMember(body);
+
+      if (!newMember) return res.status(409).send({ message: 'Unable to create a new member' });
+
+      await teamService.addMemberToTeam(newMember?.id, teamRef as string);
+
+      res.status(200).send({ message: `Member added to the team: ${teamRef}` });
+    } catch (e) {
+      console.error('Error in teamController.addMember', e);
+    }
   }
 };

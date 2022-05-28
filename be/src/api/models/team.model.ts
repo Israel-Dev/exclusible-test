@@ -9,7 +9,7 @@ interface Team extends MongooseClient.Document {
 const teamSchema = new Schema<Team>(
   {
     members: [String],
-    teamRef: String
+    teamRef: { type: String, unique: true }
   },
   {
     collection: 'teams'

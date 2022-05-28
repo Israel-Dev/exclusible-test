@@ -22,5 +22,19 @@ export const service = {
     } catch (e) {
       console.error('Error in teamService.getTeamById', e);
     }
+  },
+  addMemberToTeam: async (memberId: string, teamRef: string) => {
+    try {
+      const updatedTeam = await teamModel.findOneAndUpdate(
+        { teamRef },
+        { $push: { members: memberId } }
+      );
+
+      if (!updatedTeam) return null;
+
+      return updatedTeam;
+    } catch (e) {
+      console.error('Error in teamService.addMemberTeam', e);
+    }
   }
 };

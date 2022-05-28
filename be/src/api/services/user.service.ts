@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { userModel } from '../models';
+import { teamModel, userModel } from '../models';
 import { RedisClient } from '../../db';
 import { RedisEnums } from '../types';
+import { genRandomRef } from '../utils/string';
 
 const { RedisKeys } = RedisEnums;
 const { JWT_SECRET } = process.env;
@@ -26,11 +27,17 @@ export const service = {
 
       const hashedPassword = bcrypt.hashSync(password, 10);
 
+      const teamRef = genRandomRef(8); //genRandomRef(8);
+
+      const newTeam = await teamModel.create({
+        teamRef
+      });
+
       const newUser = await userModel.create({
         email,
         password: hashedPassword,
         username,
-        teams: []
+        teams: [newTeam._id]
       });
 
       const token = await service.login(email, password);
