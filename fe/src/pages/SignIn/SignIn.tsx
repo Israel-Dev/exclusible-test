@@ -30,7 +30,6 @@ const Copyright = (props: any) => {
 
 const SignIn = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
