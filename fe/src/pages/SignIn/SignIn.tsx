@@ -30,6 +30,8 @@ const Copyright = (props: any) => {
 
 const SignIn = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -92,12 +94,12 @@ const SignIn = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link onClick={() => navigate(RoutePaths.signUp)} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
