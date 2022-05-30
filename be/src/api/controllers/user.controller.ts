@@ -6,9 +6,10 @@ import { RedisKeys } from '../types/redis';
 export const controller = {
   register: async (req: Request, res: Response) => {
     try {
-      const { email, password, username } = req.body;
+      //
+      const { email, password, firstName, lastName } = req.body;
 
-      const operationData = await userService.register(email, password, username);
+      const operationData = await userService.register(email, password, firstName, lastName);
 
       if (operationData && !operationData.newUser)
         return res.status(operationData.status).send({ message: operationData.message });

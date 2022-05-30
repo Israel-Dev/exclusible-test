@@ -3,7 +3,8 @@ import { MongooseClient } from '../../db';
 import { Schema, Types } from 'mongoose';
 
 export interface User extends MongooseClient.Document {
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   teams: Types.Array<string>;
@@ -11,7 +12,8 @@ export interface User extends MongooseClient.Document {
 
 const userSchema = new Schema<User>(
   {
-    username: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     teams: [String]

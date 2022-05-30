@@ -18,7 +18,7 @@ export const service = {
       console.error('Error in userService', e);
     }
   },
-  register: async (email: string, password: string, username: string) => {
+  register: async (email: string, password: string, firstName: string, lastName: string) => {
     try {
       const isRegisteredUser = await userModel.find({ email });
 
@@ -36,7 +36,8 @@ export const service = {
       const newUser = await userModel.create({
         email,
         password: hashedPassword,
-        username,
+        firstName,
+        lastName,
         teams: [newTeam._id]
       });
 

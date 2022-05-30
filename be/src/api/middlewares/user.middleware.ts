@@ -8,9 +8,9 @@ const { JWT_SECRET } = process.env;
 
 export const mw = {
   hasAllFields: (req: Request, res: Response, next: () => void) => {
-    const { username, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    if (!email || !username || !password)
+    if (!email || !firstName || !lastName || !password)
       return res.status(400).send({ message: 'Not all fields were sent' });
 
     next();
