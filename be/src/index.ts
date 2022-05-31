@@ -6,7 +6,7 @@ import { createMainWebSocketConnection } from './websocket/connections';
 
 const { PORT } = process.env;
 
-const app = express();
+export const app = express();
 const httpServer = createServer(app);
 createMainWebSocketConnection(httpServer);
 
@@ -27,3 +27,5 @@ app.get('/', (req, res) => {
 httpServer.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+export default app;
