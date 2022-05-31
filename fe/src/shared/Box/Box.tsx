@@ -4,19 +4,7 @@ import { default as MuiBox } from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-
-const Copyright = (props: any) => {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://exclusible.com" target="_blank">
-        Exclusible test
-      </Link>{' '}
-      {new Date().getFullYear()}
-    </Typography>
-  );
-};
+import { Copyright } from '../Copyright';
 
 interface Props {
   children?: any;
@@ -51,7 +39,7 @@ const Box = ({ handleSubmit, headingTitle, children }: Props) => {
           {children}
         </MuiBox>
       </MuiBox>
-      <Copyright sx={{ mt: 8, mb: 4 }} style={{ paddingBottom: '20px' }} />
+      <Copyright />
     </Container>
   );
 };
