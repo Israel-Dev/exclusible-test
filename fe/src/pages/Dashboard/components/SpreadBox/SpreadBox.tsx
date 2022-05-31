@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
-import Title from './Title';
-import { WebSocketService } from '../../api/services';
+import { Title } from '../../../../shared';
+import { WebSocketService } from '../../../../api/services';
 
-const Deposits = () => {
+const SpreadBox = () => {
   useEffect(() => {
     WebSocketService.connectToWebSocket();
   }, []);
@@ -27,9 +27,9 @@ const Deposits = () => {
       >
         -
       </Typography>
-      <div>{new Date().toLocaleDateString('en-uk')}</div>
+      <div>{new Date().toLocaleDateString('en-uk')} - Info from Kraken</div>
     </React.Fragment>
   );
 };
 
-export default Deposits;
+export default SpreadBox;

@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { MainListItems, SecondaryListItems } from './listItems';
 import { Copyright } from '../../shared';
-import { AppBar, CreateMember, Drawer, MyTeam, Overview, Teams } from './components';
+import { AppBar, CreateMember, Drawer, MyTeam, MyTeams, Overview } from './components';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { RoutePaths } from '../../routes';
@@ -71,7 +71,7 @@ const Dashboard = () => {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Routes>
               <Route path={'/my-team'} element={<MyTeam saveTeamRef={setTeamRef} />} />
-              <Route path={'/my-teams'} element={<Teams />} />
+              <Route path={'/my-teams'} element={<MyTeams />} />
               <Route path={'/edit-member'} element={<CreateMember teamRef={teamRef} />} />
               <Route path={'/create-member'} element={<CreateMember teamRef={teamRef} />} />
               <Route path={'/'} element={<Overview />} />

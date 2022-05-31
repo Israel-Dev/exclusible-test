@@ -1,5 +1,5 @@
 import { Grid, Paper } from '@mui/material';
-import Deposits from '../../Deposits';
+import { SpreadBox } from '../';
 import Orders from '../../Orders';
 
 const Overview = () => {
@@ -26,7 +26,7 @@ const Overview = () => {
             height: 240,
           }}
         >
-          <Deposits />
+          <SpreadBox />
         </Paper>
       </Grid>
       <Grid item xs={12}>

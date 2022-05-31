@@ -162,7 +162,6 @@ const CreateMember = ({ teamRef }: Props) => {
     }
   }, [memberId]);
 
-  console.log(formState[CreateMemberFields.dob]);
   return (
     <Paper
       sx={{

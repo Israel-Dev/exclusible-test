@@ -62,10 +62,6 @@ const Teams = () => {
       >
         {getTeamsElem}
       </Select>
-
-      <Button sx={{ marginTop: '25px', marginBottom: '25px' }} variant="contained">
-        Create a Team
-      </Button>
     </Paper>
   );
 };
