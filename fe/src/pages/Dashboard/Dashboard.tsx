@@ -71,6 +71,7 @@ const Dashboard = () => {
             <Routes>
               <Route path={'/my-team'} element={<MyTeam saveTeamRef={setTeamRef} />} />
               <Route path={'/my-teams'} element={<Teams />} />
+              <Route path={'/edit-member'} element={<CreateMember teamRef={teamRef} />} />
               <Route path={'/create-member'} element={<CreateMember teamRef={teamRef} />} />
               <Route path={'/'} element={<Overview />} />
             </Routes>

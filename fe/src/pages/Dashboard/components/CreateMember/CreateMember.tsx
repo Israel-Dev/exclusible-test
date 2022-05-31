@@ -9,7 +9,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { useCallback, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import {
@@ -79,6 +79,7 @@ const CreateMember = ({ teamRef }: Props) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formState, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const memberId = new URLSearchParams(location.search).get('memberId');
 
   const allFieldsAreValid = useCallback(() => {
     const { name, isMale, email, dob, about } = formState;
@@ -108,7 +109,6 @@ const CreateMember = ({ teamRef }: Props) => {
         });
 
         if (newMemberData && (newMemberData as PostCreateMemberSuccessResponse).memberId) {
-          console.log(newMemberData);
           await TeamService.addMember({
             teamRef: teamRef,
             memberId: (newMemberData as PostCreateMemberSuccessResponse).memberId,
@@ -121,6 +121,49 @@ const CreateMember = ({ teamRef }: Props) => {
       setIsLoading(false);
     }
   };
+
+  const handleUpdateSubmit = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      if (memberId && teamRef) {
+        await MemberService.updateMember(
+          {
+            ...formState,
+            isMale: formState.isMale === 'male' ? true : false,
+          },
+          memberId as string,
+        );
+
+        navigate(`${RoutePaths.myTeam}?teamRef=${teamRef}`);
+      }
+      setIsLoading(false);
+    } catch (e) {
+      console.error('Error in handleUpdateSubmit', e);
+      setIsLoading(false);
+    }
+  }, [memberId, formState, navigate, teamRef]);
+
+  const fetchMember = async (memberIdValue: string) => {
+    try {
+      const member = await MemberService.getMember({ memberId: memberIdValue });
+
+      dispatch({ type: CreateMemberFields.name, payload: member.name });
+      dispatch({ type: CreateMemberFields.isMale, payload: member.gender });
+      dispatch({ type: CreateMemberFields.email, payload: member.email });
+      dispatch({ type: CreateMemberFields.dob, payload: member.dob });
+      dispatch({ type: CreateMemberFields.about, payload: member.about });
+
+      return member;
+    } catch (e) {
+      console.error('Error in fetchMember', e);
+    }
+  };
+
+  useEffect(() => {
+    if (memberId) {
+      fetchMember(memberId);
+    }
+  }, [memberId]);
 
   return (
     <Paper
@@ -142,6 +185,7 @@ const CreateMember = ({ teamRef }: Props) => {
               required
               fullWidth
               id={CreateMemberFields.name}
+              value={formState[CreateMemberFields.name]}
               label="Full Name"
               autoFocus
               onChange={(e) => {
@@ -175,6 +219,7 @@ const CreateMember = ({ teamRef }: Props) => {
               required
               fullWidth
               id={CreateMemberFields.dob}
+              value={formState[CreateMemberFields.dob]}
               type="date"
               onChange={(e) => {
                 dispatch({ type: CreateMemberFields.dob, payload: e.target.value });
@@ -188,6 +233,7 @@ const CreateMember = ({ teamRef }: Props) => {
               required
               fullWidth
               id={CreateMemberFields.email}
+              value={formState[CreateMemberFields.email]}
               label="Email"
               onChange={(e) => {
                 dispatch({ type: CreateMemberFields.email, payload: e.target.value });
@@ -200,6 +246,7 @@ const CreateMember = ({ teamRef }: Props) => {
               name={CreateMemberFields.about}
               fullWidth
               id={CreateMemberFields.about}
+              value={formState[CreateMemberFields.about]}
               label="About"
               onChange={(e) => {
                 dispatch({ type: CreateMemberFields.about, payload: e.target.value });
@@ -212,8 +259,8 @@ const CreateMember = ({ teamRef }: Props) => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          disabled={!allFieldsAreValid() || isLoading}
-          onClick={handleSubmit}
+          disabled={!memberId ? !allFieldsAreValid() || isLoading : false}
+          onClick={memberId ? handleUpdateSubmit : handleSubmit}
         >
           {isLoading ? <CircularProgress color="secondary" /> : 'Create Member'}
         </Button>

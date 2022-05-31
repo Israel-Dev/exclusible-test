@@ -6,4 +6,5 @@ export enum RoutePaths {
   myTeams = '/dashboard/my-teams',
   myTeam = '/dashboard/my-team',
   createMember = '/dashboard/create-member',
+  editMember = '/dashboard/edit-member',
 }

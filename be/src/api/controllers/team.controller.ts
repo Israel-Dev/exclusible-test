@@ -79,7 +79,7 @@ export const controller = {
       const updatedMembers = await teamService.deleteTeamMember(
         memberIds as string[],
         teamRef as string
-      ); //
+      );
 
       if (updatedMembers && (updatedMembers as { status: number; message: string }).status) {
         return res.status((updatedMembers as { status: number; message: string }).status).send({

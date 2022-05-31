@@ -77,7 +77,7 @@ const MyTeam = ({ saveTeamRef }: Props) => {
     >
       <Header
         title="My Team"
-        paragraph="Click on a member to update his/her info or click the create button to add a new member to the team"
+        paragraph="Double click on a member to update his/her info or click the create button to add a new member to the team"
       />
 
       <ActionsContainer className="action-container">

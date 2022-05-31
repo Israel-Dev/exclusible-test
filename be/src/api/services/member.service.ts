@@ -45,5 +45,21 @@ export const service = {
     } catch (e) {
       console.error('Error in memberService.createMember', e);
     }
+  },
+  updateMember: async (
+    memberId: string,
+    member: {
+      name?: string;
+      email?: string;
+      dob?: string;
+      isMale?: boolean;
+      about?: string;
+    }
+  ) => {
+    try {
+      await memberModel.updateOne({ _id: memberId }, { ...member });
+    } catch (e) {
+      console.error('Error in memberService.updateMember', e);
+    }
   }
 };

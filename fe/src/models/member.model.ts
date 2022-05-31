@@ -2,7 +2,7 @@ export interface MembersModel {
   about: string;
   dob: string;
   email: string;
-  gender: 'Male' | 'Female';
+  gender: 'male' | 'female';
   name: string;
   _id: string;
 }

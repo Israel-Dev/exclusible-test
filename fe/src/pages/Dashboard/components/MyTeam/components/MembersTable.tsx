@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   DataGrid,
   GridCallbackDetails,
   GridCellParams,
   GridColDef,
+  GridRowParams,
   GridState,
   GridValueGetterParams,
   MuiEvent,
 } from '@mui/x-data-grid';
 import { MembersModel } from '../../../../../models/member.model';
+import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../../../../routes';
 
 const columns: GridColDef[] = [
   { field: 'name', headerName: 'Name', width: 200, sortable: false },
@@ -24,6 +27,8 @@ interface Props {
 }
 
 const MembersTable = ({ members, handleOnStateChange }: Props) => {
+  const navigate = useNavigate();
+
   const rows = members.map((member) => ({
     id: member._id,
     name: member.name,
@@ -32,6 +37,17 @@ const MembersTable = ({ members, handleOnStateChange }: Props) => {
     dob: member.dob,
     about: member.about,
   }));
+
+  const handleOnDoubleClick = useCallback(
+    (
+      params: GridRowParams,
+      // , event: MuiEvent<React.MouseEvent>, details: GridCallbackDetails
+    ) => {
+      const { row } = params;
+      navigate(`${RoutePaths.editMember}?memberId=${row.id}`);
+    },
+    [],
+  );
 
   return (
     <div style={{ height: 400, width: '100%' }}>
@@ -44,16 +60,8 @@ const MembersTable = ({ members, handleOnStateChange }: Props) => {
         sortingMode="server"
         autoHeight={true}
         disableSelectionOnClick={true}
-        // onCellClick={(
-        //   params: GridCellParams,
-        //   event: MuiEvent<React.MouseEvent>,
-        //   details: GridCallbackDetails,
-        // ) => {
-        //   console.log('params', params);
-        //   console.log('event', event);
-        //   console.log('details', details);
-        // }}
         onStateChange={handleOnStateChange}
+        onRowDoubleClick={handleOnDoubleClick}
       />
     </div>
   );
