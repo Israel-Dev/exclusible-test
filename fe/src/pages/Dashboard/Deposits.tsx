@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
 import { WebSocketService } from '../../api/services';
-
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault();
-}
 
 const Deposits = () => {
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import validator from 'validator';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -61,6 +61,11 @@ const INITIAL_STATE: State = {
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const token = Cookies.get('token');
+
+  useEffect(() => {
+    if (token) navigate(RoutePaths.dashboard);
+  }, [token]);
 
   const [formState, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [isPwdVisible, setIsPwdVisible] = useState(false);

@@ -10,7 +10,7 @@ import {
   PostCreateMemberSuccessResponse,
 } from '../dtos/member.dto';
 import { MemberEndpoints } from '../endpoints/member.endpoint';
-import { mapMemberResponseToModel } from '../mappers/member.mapper';
+import { mapMemberResponseToModelNoDateFormat } from '../mappers/member.mapper';
 
 const { REACT_APP_SERVER } = process.env;
 
@@ -47,7 +47,7 @@ const service = {
             },
           })
           .then((res) => {
-            resolve(mapMemberResponseToModel([res.data])[0]);
+            resolve(mapMemberResponseToModelNoDateFormat([res.data])[0]);
           })
           .catch((e) => {
             console.error('Error in memberService.getMember', e);

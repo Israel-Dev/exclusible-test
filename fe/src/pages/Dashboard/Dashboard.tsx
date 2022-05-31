@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,15 +7,12 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { MainListItems, SecondaryListItems } from './listItems';
-import Orders from './Orders';
-import { useNavigate } from 'react-router-dom';
 import { Copyright } from '../../shared';
 import { AppBar, CreateMember, Drawer, MyTeam, Overview, Teams } from './components';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { RoutePaths } from '../../routes';
 
 export const drawerWidth = 240;
@@ -24,6 +21,10 @@ const mdTheme = createTheme();
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const token = Cookies.get('token');
+
+  if (!token || !token.trim() || token === undefined) navigate(RoutePaths.signIn);
+
   const [open, setOpen] = useState(false);
   const toggleDrawer = () => {
     setOpen(!open);

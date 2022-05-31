@@ -12,10 +12,7 @@ import {
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator';
-import {
-  PostCreateMemberParams,
-  PostCreateMemberSuccessResponse,
-} from '../../../../api/dtos/member.dto';
+import { PostCreateMemberSuccessResponse } from '../../../../api/dtos/member.dto';
 import { MemberService, TeamService } from '../../../../api/services';
 import { RoutePaths } from '../../../../routes';
 import { Header } from '../../../../shared';
@@ -82,7 +79,7 @@ const CreateMember = ({ teamRef }: Props) => {
   const memberId = new URLSearchParams(location.search).get('memberId');
 
   const allFieldsAreValid = useCallback(() => {
-    const { name, isMale, email, dob, about } = formState;
+    const { name, isMale, email, dob } = formState;
 
     if (
       !name ||
@@ -165,6 +162,7 @@ const CreateMember = ({ teamRef }: Props) => {
     }
   }, [memberId]);
 
+  console.log(formState[CreateMemberFields.dob]);
   return (
     <Paper
       sx={{

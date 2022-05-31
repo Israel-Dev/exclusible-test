@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -50,6 +50,11 @@ const INITIAL_STATE: State = {
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const token = Cookies.get('token');
+
+  useEffect(() => {
+    if (token) navigate(RoutePaths.dashboard);
+  }, [token]);
 
   const [formState, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [isPwdVisible, setIsPwdVisible] = useState(false);
@@ -149,11 +154,6 @@ const SignIn = () => {
         {isLoading ? <CircularProgress color="secondary" /> : 'Sign in'}
       </Button>
       <Grid container>
-        <Grid item xs>
-          <Link href="" variant="body2">
-            Forgot password?
-          </Link>
-        </Grid>
         <Grid item>
           <Link onClick={() => navigate(RoutePaths.signUp)} variant="body2">
             {"Don't have an account? Sign Up"}

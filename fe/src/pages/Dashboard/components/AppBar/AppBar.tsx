@@ -3,8 +3,8 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Badge, Typography } from '@mui/material';
-import { Logout as LogoutIcon, Notifications as NotificationsIcon } from '@mui/icons-material';
+import { Typography } from '@mui/material';
+import { Logout as LogoutIcon } from '@mui/icons-material';
 import { useCallback } from 'react';
 import { UserService } from '../../../../api/services';
 import Cookies from 'js-cookie';
@@ -44,7 +44,7 @@ const AppBar = ({ open, toggleDrawer }: Props) => {
 
   const handleLogoutClick = useCallback(async () => {
     try {
-      const data = await UserService.logout();
+      await UserService.logout();
       Cookies.remove('token');
       navigate(RoutePaths.home);
     } catch (e) {

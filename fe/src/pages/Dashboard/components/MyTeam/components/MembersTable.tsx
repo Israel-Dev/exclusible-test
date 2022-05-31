@@ -1,12 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import {
   DataGrid,
   GridCallbackDetails,
-  GridCellParams,
   GridColDef,
   GridRowParams,
   GridState,
-  GridValueGetterParams,
   MuiEvent,
 } from '@mui/x-data-grid';
 import { MembersModel } from '../../../../../models/member.model';

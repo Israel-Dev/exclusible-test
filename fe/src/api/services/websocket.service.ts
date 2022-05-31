@@ -5,7 +5,7 @@ const service = {
     if (WebSocketEndpoints.websocket) {
       const ws = new WebSocket(WebSocketEndpoints.websocket);
 
-      ws.onopen = (event) => {
+      ws.onopen = () => {
         console.log('Connection to WebSocket established');
       };
 

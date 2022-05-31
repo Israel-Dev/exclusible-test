@@ -7,3 +7,12 @@ export const mapMemberResponseToModel = (dto: GetTeamMembersSuccessResponse[]): 
     gender: member.isMale ? 'male' : 'female',
     dob: new Date(member.dob).toLocaleDateString('en-uk'),
   }));
+
+export const mapMemberResponseToModelNoDateFormat = (
+  dto: GetTeamMembersSuccessResponse[],
+): MembersModel[] =>
+  dto.map((member) => ({
+    ...member,
+    gender: member.isMale ? 'male' : 'female',
+    dob: new Date(member.dob).toISOString().split('T')[0],
+  }));

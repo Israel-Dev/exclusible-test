@@ -1,5 +1,5 @@
-import { Button, Paper, useTheme } from '@mui/material';
-import { GridCallbackDetails, GridState, MuiEvent } from '@mui/x-data-grid';
+import { Button, Paper } from '@mui/material';
+import { GridState } from '@mui/x-data-grid';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TeamService } from '../../../../api/services';

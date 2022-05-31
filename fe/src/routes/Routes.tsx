@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import App from '../App';
 import { SignIn, SignUp, Dashboard } from '../pages';
 import { RoutePaths } from './Routes.types';
 
