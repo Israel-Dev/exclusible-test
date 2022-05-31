@@ -10,8 +10,8 @@ const Copyright = (props: any) => {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://exclusible.com" target="_blank">
+        Exclusible test
       </Link>{' '}
       {new Date().getFullYear()}
     </Typography>

@@ -14,3 +14,7 @@ export interface PostRegisterSuccessResponse {
   message: string;
   token: string;
 }
+
+export interface PostRegisterFailedResponse {
+  message: string;
+}
