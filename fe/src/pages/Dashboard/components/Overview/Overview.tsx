@@ -1,7 +1,6 @@
 import { Grid, Paper, TextField, InputLabel } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SpreadBox } from '../';
-import Orders from '../../Orders';
 import { StyledTotal, StyledTotalTitle, TotalContainer } from './Overview.styled';
 
 const Overview = () => {

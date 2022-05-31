@@ -1,4 +1,4 @@
-import { Button, InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
+import { InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamService } from '../../../../api/services';
