@@ -71,7 +71,14 @@ const AppBar = ({ open, toggleDrawer }: Props) => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+        <Typography
+          component="h1"
+          variant="h6"
+          color="inherit"
+          noWrap
+          sx={{ flexGrow: 1, cursor: 'pointer' }}
+          onClick={() => navigate(RoutePaths.dashboard)}
+        >
           Dashboard
         </Typography>
 

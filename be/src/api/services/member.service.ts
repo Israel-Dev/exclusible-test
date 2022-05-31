@@ -36,7 +36,10 @@ export const service = {
   },
   createMember: async (member: Member) => {
     try {
-      const newMember = await memberModel.create(member);
+      const newMember = await memberModel.create({
+        ...member,
+        about: member.about ? member.about : '-'
+      });
 
       return newMember;
     } catch (e) {

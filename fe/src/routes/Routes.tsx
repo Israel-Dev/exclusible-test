@@ -9,7 +9,7 @@ const RoutesComponent = () => {
       <Route path={RoutePaths.home} element={<SignIn />} />
       <Route path={RoutePaths.signIn} element={<SignIn />} />
       <Route path={RoutePaths.signUp} element={<SignUp />} />
-      <Route path={RoutePaths.dashboard} element={<Dashboard />} />
+      <Route path={`${RoutePaths.dashboard}/*`} element={<Dashboard />} />
     </Routes>
   );
 };

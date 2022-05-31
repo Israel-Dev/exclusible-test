@@ -10,12 +10,13 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
-import Deposits from './Deposits';
+import { MainListItems, secondaryListItems } from './listItems';
 import Orders from './Orders';
 import { useNavigate } from 'react-router-dom';
 import { Copyright } from '../../shared';
-import { AppBar, Drawer } from './components';
+import { AppBar, CreateMember, Drawer, MyTeam, Overview, Teams } from './components';
+import { Route, Routes } from 'react-router-dom';
+import { RoutePaths } from '../../routes';
 
 export const drawerWidth = 240;
 
@@ -27,6 +28,8 @@ const Dashboard = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const [teamRef, setTeamRef] = useState('');
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -48,7 +51,7 @@ const Dashboard = () => {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            <MainListItems />
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
@@ -57,7 +60,7 @@ const Dashboard = () => {
           component="main"
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+              theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
@@ -65,39 +68,12 @@ const Dashboard = () => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <h1>I am Paper</h1>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
-            </Grid>
+            <Routes>
+              <Route path={'/my-team'} element={<MyTeam saveTeamRef={setTeamRef} />} />
+              <Route path={'/my-teams'} element={<Teams />} />
+              <Route path={'/create-member'} element={<CreateMember teamRef={teamRef} />} />
+              <Route path={'/'} element={<Overview />} />
+            </Routes>
             <Copyright />
           </Container>
         </Box>

@@ -11,17 +11,23 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PhoneLockedIcon from '@mui/icons-material/PhoneLocked';
+import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../routes';
 
-export const mainListItems = (
-  <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <GroupsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Teams" />
-    </ListItemButton>
-  </React.Fragment>
-);
+export const MainListItems = () => {
+  const navigate = useNavigate();
+
+  return (
+    <React.Fragment>
+      <ListItemButton onClick={() => navigate(RoutePaths.myTeams)}>
+        <ListItemIcon>
+          <GroupsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Teams" />
+      </ListItemButton>
+    </React.Fragment>
+  );
+};
 
 export const secondaryListItems = (
   <React.Fragment>

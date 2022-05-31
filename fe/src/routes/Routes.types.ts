@@ -3,4 +3,7 @@ export enum RoutePaths {
   signIn = '/sign-in',
   signUp = '/sign-up',
   dashboard = '/dashboard',
+  myTeams = '/dashboard/my-teams',
+  myTeam = '/dashboard/my-team',
+  createMember = '/dashboard/create-member',
 }
