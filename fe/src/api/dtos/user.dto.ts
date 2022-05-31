@@ -3,6 +3,15 @@ export interface PostLoginParams {
   password: string;
 }
 
+export interface PostLoginSuccessResponse {
+  token: string;
+  message: string;
+}
+
+export interface PostLoginFailedResponse {
+  message: string;
+}
+
 export interface PostRegisterParams {
   email: string;
   firstName: string;

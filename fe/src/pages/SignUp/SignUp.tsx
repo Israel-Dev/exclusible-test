@@ -94,6 +94,7 @@ const SignUp = () => {
 
       if (allFieldsAreValid()) {
         const data = await UserService.registerUser(formState);
+
         if (data && (data as PostRegisterSuccessResponse).token) {
           Cookies.set('token', (data as PostRegisterSuccessResponse).token);
           setIsLoading(false);
