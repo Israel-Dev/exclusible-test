@@ -74,12 +74,12 @@ export const controller = {
   deleteMember: async (req: Request, res: Response) => {
     try {
       const { teamRef } = req.query;
-      const { memberId } = req.body;
+      const { memberIds } = req.body;
 
       const updatedMembers = await teamService.deleteTeamMember(
-        memberId as string,
+        memberIds as string[],
         teamRef as string
-      );
+      ); //
 
       if (updatedMembers && (updatedMembers as { status: number; message: string }).status) {
         return res.status((updatedMembers as { status: number; message: string }).status).send({

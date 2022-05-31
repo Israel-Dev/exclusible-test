@@ -15,7 +15,6 @@ const service = {
   ): Promise<PostCreateMemberSuccessResponse | PostCreateMemberFailedResponse> =>
     new Promise((resolve, reject) => {
       const authorization = Cookies.get('token');
-      console.log('hey');
       if (REACT_APP_SERVER && authorization) {
         axios
           .post(`${REACT_APP_SERVER}${MemberEndpoints.createMember}`, dto, {

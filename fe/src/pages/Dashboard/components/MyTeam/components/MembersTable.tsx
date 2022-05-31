@@ -1,40 +1,38 @@
-import * as React from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import React, { useState } from 'react';
+import {
+  DataGrid,
+  GridCallbackDetails,
+  GridCellParams,
+  GridColDef,
+  GridState,
+  GridValueGetterParams,
+  MuiEvent,
+} from '@mui/x-data-grid';
+import { MembersModel } from '../../../../../models/member.model';
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'Name', width: 130 },
-  { field: 'lastName', headerName: 'Date of Birth', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Email',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Gender',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
+  { field: 'name', headerName: 'Name', width: 200, sortable: false },
+  { field: 'gender', headerName: 'Gender', width: 100, sortable: false },
+  { field: 'email', headerName: 'Email', width: 250, sortable: false },
+  { field: 'dob', headerName: 'Date of Birth', width: 125, sortable: false },
+  { field: 'about', headerName: 'About', width: 250, sortable: false },
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+interface Props {
+  members: MembersModel[];
+  handleOnStateChange: (state: GridState, event: MuiEvent, details: GridCallbackDetails) => void;
+}
 
-const MembersTable = () => {
+const MembersTable = ({ members, handleOnStateChange }: Props) => {
+  const rows = members.map((member) => ({
+    id: member._id,
+    name: member.name,
+    gender: member.gender,
+    email: member.email,
+    dob: member.dob,
+    about: member.about,
+  }));
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -43,6 +41,19 @@ const MembersTable = () => {
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        sortingMode="server"
+        autoHeight={true}
+        disableSelectionOnClick={true}
+        // onCellClick={(
+        //   params: GridCellParams,
+        //   event: MuiEvent<React.MouseEvent>,
+        //   details: GridCallbackDetails,
+        // ) => {
+        //   console.log('params', params);
+        //   console.log('event', event);
+        //   console.log('details', details);
+        // }}
+        onStateChange={handleOnStateChange}
       />
     </div>
   );

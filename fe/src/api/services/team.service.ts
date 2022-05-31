@@ -1,7 +1,15 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { GetAddMembersParams, GetTeamMembersParams } from '../dtos/team.dto';
+import { MembersModel } from '../../models/member.model';
+import {
+  DeleteMembersFromTeamFailedResponse,
+  DeleteMembersFromTeamParams,
+  DeleteMembersFromTeamSuccessResponse,
+  GetAddMembersParams,
+  GetTeamMembersParams,
+} from '../dtos/team.dto';
 import { TeamEndpoints } from '../endpoints';
+import { mapMemberResponseToModel } from '../mappers/member.mapper';
 
 const { REACT_APP_SERVER } = process.env;
 
@@ -26,7 +34,7 @@ const service = {
           });
       }
     }),
-  getMembers: (dto: GetTeamMembersParams) =>
+  getMembers: (dto: GetTeamMembersParams): Promise<MembersModel[]> =>
     new Promise((resolve, reject) => {
       const authorization = Cookies.get('token');
       const { teamRef } = dto;
@@ -38,7 +46,10 @@ const service = {
               authorization: `Bearer ${authorization}`,
             },
           })
-          .then((res) => resolve(res.data))
+          .then((res) => {
+            const mapedMembers = mapMemberResponseToModel(res.data);
+            resolve(mapedMembers);
+          })
           .catch((e) => {
             console.error('Error in teamService.getMembers', e);
             reject(e.data);
@@ -62,6 +73,32 @@ const service = {
             console.error('Error in teamService.addMember', e);
             reject(e.data);
           });
+    }),
+  removeMembersFromTeam: (
+    dto: DeleteMembersFromTeamParams,
+  ): Promise<DeleteMembersFromTeamSuccessResponse | DeleteMembersFromTeamFailedResponse> =>
+    new Promise((resolve, reject) => {
+      const { memberIds, teamRef } = dto;
+      const authorization = Cookies.get('token');
+
+      if (authorization && REACT_APP_SERVER) {
+        axios
+          .delete(`${REACT_APP_SERVER}${TeamEndpoints.deleteMemberFromTeam}?teamRef=${teamRef}`, {
+            data: {
+              memberIds,
+            },
+            headers: {
+              authorization: `Bearer ${authorization}`,
+            },
+          })
+          .then((res) => {
+            resolve(res.data);
+          })
+          .catch((e) => {
+            console.error('Error in teamService.removeMembersFromTeam', e);
+            reject(e.data);
+          });
+      }
     }),
 };
 

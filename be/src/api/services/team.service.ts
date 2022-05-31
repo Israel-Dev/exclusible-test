@@ -37,15 +37,20 @@ export const service = {
       console.error('Error in teamService.addMemberTeam', e);
     }
   },
-  deleteTeamMember: async (memberId: string, teamRef: string) => {
+  deleteTeamMember: async (memberIds: string[], teamRef: string) => {
     try {
       const members = (await teamModel.find({ teamRef }))[0].members;
 
-      const indexToBeRemoved = members.findIndex((savedMember) => savedMember === memberId);
+      for (let i = 0; i < memberIds.length; i++) {
+        const memberId = memberIds[i];
 
-      if (indexToBeRemoved === -1) return { status: 404, message: 'Member was not found' };
+        const indexToBeRemoved = members.findIndex((savedMember) => savedMember === memberId);
 
-      members.splice(indexToBeRemoved, 1);
+        if (indexToBeRemoved === -1)
+          return { status: 404, message: `Member width id '${memberId}' was not found` };
+
+        members.splice(indexToBeRemoved, 1);
+      }
 
       const updatedMembers = await teamModel.findOneAndUpdate({ teamRef }, { members });
 

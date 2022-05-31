@@ -26,7 +26,7 @@ router.post(
 router.delete(
   '/deleteMember',
   teamMw.hasTeamRef,
-  memberMw.hasMemberId,
+  memberMw.hasMemberIds,
   userMw.hasAuthorization,
   userMw.hasValidToken,
   teamController.deleteMember
