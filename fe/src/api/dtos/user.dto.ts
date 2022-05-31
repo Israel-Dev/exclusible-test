@@ -27,3 +27,11 @@ export interface PostRegisterSuccessResponse {
 export interface PostRegisterFailedResponse {
   message: string;
 }
+
+export interface GetLogoutSuccessResponse {
+  message: string;
+}
+
+export interface GetLogoutFailedResponse {
+  message: string;
+}

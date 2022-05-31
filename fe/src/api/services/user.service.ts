@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { UserEndpoints } from '../endpoints';
 import {
+  GetLogoutFailedResponse,
+  GetLogoutSuccessResponse,
   PostLoginFailedResponse,
   PostLoginParams,
   PostLoginSuccessResponse,
@@ -8,6 +10,7 @@ import {
   PostRegisterParams,
   PostRegisterSuccessResponse,
 } from '../dtos/user.dto';
+import Cookies from 'js-cookie';
 
 const { REACT_APP_SERVER } = process.env;
 
@@ -33,16 +36,38 @@ const service = {
       axios
         .post(`${REACT_APP_SERVER}${UserEndpoints.login}`, params)
         .then((res) => {
-          console.log('res.data', res.data);
-
           resolve(res.data);
         })
         .catch((e) => {
           console.error('Erro in loginUserService', e);
-          if (e && e.response && e.response.data && e.response.data) {
+          if (e && e.response && e.response.data) {
             reject(e.response.data);
           }
         });
+    }),
+  logout: (): Promise<GetLogoutSuccessResponse | GetLogoutFailedResponse> =>
+    new Promise((resolve, reject) => {
+      const authorization = Cookies.get('token');
+
+      if (authorization) {
+        axios
+          .post(
+            `${REACT_APP_SERVER}${UserEndpoints.logout}`,
+            {},
+            {
+              headers: { authorization: `Bearer ${authorization}` },
+            },
+          )
+          .then((res) => {
+            resolve(res.data);
+          })
+          .catch((e) => {
+            console.error('Error in logoutUserService', e);
+            if (e && e.response && e.response.data) {
+              reject(e.response.data);
+            }
+          });
+      }
     }),
 };
 

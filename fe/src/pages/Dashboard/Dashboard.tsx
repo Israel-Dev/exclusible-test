@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useCallback } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -16,10 +16,14 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Logout as LogoutIcon, Notifications as NotificationsIcon } from '@mui/icons-material';
 import { mainListItems, secondaryListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import { UserService } from '../../api/services';
+import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../../routes';
+import Cookies from 'js-cookie';
 
 function Copyright(props: any) {
   return (
@@ -87,10 +91,21 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 const Dashboard = () => {
-  const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const handleLogoutClick = useCallback(async () => {
+    try {
+      const data = await UserService.logout();
+      Cookies.remove('token');
+      navigate(RoutePaths.home);
+    } catch (e) {
+      console.error('Error in handleLogouClick', e);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -121,6 +136,9 @@ const Dashboard = () => {
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
+            </IconButton>
+            <IconButton color="inherit" onClick={handleLogoutClick}>
+              <LogoutIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
