@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { MainListItems, secondaryListItems } from './listItems';
+import { MainListItems, SecondaryListItems } from './listItems';
 import Orders from './Orders';
 import { useNavigate } from 'react-router-dom';
 import { Copyright } from '../../shared';
@@ -53,7 +53,7 @@ const Dashboard = () => {
           <List component="nav">
             <MainListItems />
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <SecondaryListItems />
           </List>
         </Drawer>
         <Box

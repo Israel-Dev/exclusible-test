@@ -35,3 +35,7 @@ export interface GetLogoutSuccessResponse {
 export interface GetLogoutFailedResponse {
   message: string;
 }
+
+export interface GetLogoutEveryWhereSuccessResponse {
+  message: string;
+}

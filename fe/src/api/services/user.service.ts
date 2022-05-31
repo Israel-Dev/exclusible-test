@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { UserEndpoints } from '../endpoints';
 import {
+  GetLogoutEveryWhereSuccessResponse,
   GetLogoutFailedResponse,
   GetLogoutSuccessResponse,
   PostLoginFailedResponse,
@@ -66,6 +67,27 @@ const service = {
             if (e && e.response && e.response.data) {
               reject(e.response.data);
             }
+          });
+      }
+    }),
+  logoutEverywhere: (): Promise<GetLogoutEveryWhereSuccessResponse> =>
+    new Promise((resolve, reject) => {
+      const authorization = Cookies.get('token');
+
+      if (REACT_APP_SERVER && authorization) {
+        axios
+          .get(`${REACT_APP_SERVER}${UserEndpoints.logoutEverywhere}`, {
+            headers: {
+              authorization: `Bearer ${authorization}`,
+            },
+          })
+          .then((res) => {
+            Cookies.remove('token');
+            resolve(res.data);
+          })
+          .catch((e) => {
+            console.error('Error in userService.logouEverywhere', e);
+            reject(e.data);
           });
       }
     }),
