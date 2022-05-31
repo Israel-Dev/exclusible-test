@@ -5,6 +5,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { Routes } from './routes';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+declare global {
+  interface Window {
+    spreadValue: number;
+  }
+}
+
 const theme = createTheme();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

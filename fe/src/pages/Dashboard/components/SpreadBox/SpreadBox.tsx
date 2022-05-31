@@ -3,9 +3,13 @@ import Typography from '@mui/material/Typography';
 import { Title } from '../../../../shared';
 import { WebSocketService } from '../../../../api/services';
 
-const SpreadBox = () => {
+interface Props {
+  spreadChangeCallback: (value: number) => void;
+}
+
+const SpreadBox = ({ spreadChangeCallback }: Props) => {
   useEffect(() => {
-    WebSocketService.connectToWebSocket();
+    WebSocketService.connectToWebSocket(spreadChangeCallback);
   }, []);
 
   return (
@@ -16,6 +20,8 @@ const SpreadBox = () => {
         variant="h4"
         className="typography-container"
         id="spread-value-element"
+        onChange={() => console.log('Changed!')}
+        onChangeCapture={() => console.log('Changed!')}
       >
         -
       </Typography>

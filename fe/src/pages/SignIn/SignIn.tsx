@@ -1,10 +1,4 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import { RoutePaths } from '../../routes';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '../../shared';
@@ -12,7 +6,18 @@ import validator from 'validator';
 import { UserService } from '../../api/services';
 import { PostLoginFailedResponse, PostLoginSuccessResponse } from '../../api/dtos/user.dto';
 import Cookies from 'js-cookie';
-import { Alert, CircularProgress, IconButton, InputAdornment } from '@mui/material';
+import {
+  Alert,
+  Checkbox,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  Link,
+  Grid,
+  TextField,
+  Button,
+  FormControlLabel,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 enum SignInFields {
