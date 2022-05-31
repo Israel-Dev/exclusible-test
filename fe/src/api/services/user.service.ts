@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { RoutePaths } from '../../routes';
 import { UserEndpoints } from '../endpoints';
 import {
   PostLoginFailedResponse,
