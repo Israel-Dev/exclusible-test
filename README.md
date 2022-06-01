@@ -42,4 +42,5 @@ Both projects must be running at the same time.
 - Prettier
 - ESLint
 - Material-ui
+- styled-components
 - Jest
