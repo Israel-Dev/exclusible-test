@@ -26,7 +26,8 @@ npm run start
 
 ###### Note
 
-Both projects must be running at the same time.
+- Both projects must be running at the same time.
+- Secrets were sent to the repo just to simplify evaluation
 
 ## Stack and main libraries used
 
